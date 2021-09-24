@@ -264,6 +264,19 @@ public class MazeGenerator
 
         }
 
+        // Generate output string
+        String output = width + "," + length + ":" + mazeMatrix[startWidth][startLength].getName() + ":" + mazeMatrix[visitedRow[length*width-1]][visitedCol[length*width-1]].getName() + ":";
+        
+        for (int i = 0; i < width; i++) 
+        {
+            for (int j = 0; j < length; j++) 
+            {
+                output += mazeMatrix[i][j].getCellOpenness(); 
+            } 
+        }
+
+        System.out.println(output);
+
     } 
 
 

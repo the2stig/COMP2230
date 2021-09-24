@@ -154,5 +154,23 @@ public class Node {
     return this.possibleDirections.empty();
   }
 
+  public int getCellOpenness()
+  {
+    int cellOpenness = 0;
 
+    if(right != null && down != null)
+    {
+      cellOpenness = 3;
+    }
+    else if(right == null && down != null)
+    {
+      cellOpenness = 2;
+    }
+    else if(right != null && down == null)
+    {
+      cellOpenness = 1;
+    }
+
+    return cellOpenness;
+  }
 }
