@@ -1,9 +1,10 @@
 
 import java.util.*;
+import java.io.*;
 
 public class MazeGenerator 
 {
-    public static void main(String[] args) 
+    public static void main(String[] args) throws IOException
     {
         System.out.println("MazeGenerator");
 
@@ -276,6 +277,13 @@ public class MazeGenerator
         }
 
         System.out.println(output);
+
+        // Write to file
+        FileWriter outputFile = new FileWriter(args[2],false);
+        outputFile.write(output);
+        outputFile.flush();
+        outputFile.close();
+
 
     } 
 
