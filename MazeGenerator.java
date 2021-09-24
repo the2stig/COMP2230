@@ -101,7 +101,7 @@ public class MazeGenerator
             // Find next valid node 
             boolean nodeFound = false;
 
-            /*
+            
             while(nodeFound == false)
             {
                 int direction = 0;
@@ -123,11 +123,11 @@ public class MazeGenerator
                         {
                             nodeFound = true;
 
+                            mazeMatrix[row][col].setUpNode(mazeMatrix[row-1][col]);
+                            mazeMatrix[row-1][col].setDownNode(mazeMatrix[row][col]);
 
-
-
-                            row = mazeMatrix[row-1][col].getRow()
-                            col = mazeMatrix[row-1][col].getCol()
+                            row = mazeMatrix[row-1][col].getRow();
+                            col = mazeMatrix[row-1][col].getCol();
                         }
                         break;
 
@@ -137,10 +137,11 @@ public class MazeGenerator
                         {
                             nodeFound = true;
 
+                            mazeMatrix[row][col].setRightNode(mazeMatrix[row][col+1]);
+                            mazeMatrix[row][col+1].setLeftNode(mazeMatrix[row][col]);
 
-
-                            row = mazeMatrix[row-1][col].getRow()
-                            col = mazeMatrix[row-1][col].getCol()
+                            row = mazeMatrix[row][col+1].getRow();
+                            col = mazeMatrix[row][col+1].getCol();
                         }
                         break;
 
@@ -150,11 +151,11 @@ public class MazeGenerator
                         {
                             nodeFound = true;
 
+                            mazeMatrix[row][col].setDownNode(mazeMatrix[row+1][col]);
+                            mazeMatrix[row+1][col].setUpNode(mazeMatrix[row][col]);
 
-
-
-                            row = mazeMatrix[row-1][col].getRow()
-                            col = mazeMatrix[row-1][col].getCol()
+                            row = mazeMatrix[row+1][col].getRow();
+                            col = mazeMatrix[row+1][col].getCol();
                         }
 
                         break;
@@ -165,21 +166,26 @@ public class MazeGenerator
                         {
                             nodeFound = true;
 
+                            mazeMatrix[row][col].setLeftNode(mazeMatrix[row][col-1]);
+                            mazeMatrix[row][col-1].setRightNode(mazeMatrix[row][col]);
 
-
-
-
-                            row = mazeMatrix[row-1][col].getRow()
-                            col = mazeMatrix[row-1][col].getCol()
+                            row = mazeMatrix[row][col-1].getRow();
+                            col = mazeMatrix[row][col-1].getCol();
                         }
                         break;
                     
                 }
                 
+                // No valid nodes to travel too
+                if(nodeFound == false)
+                {
+                    // Back
+
+                }
 
                 //System.out.println(direction);
             }
-            */
+            
         } 
   
 
