@@ -91,6 +91,7 @@ public class MazeGenerator
             vertex++;
 
             // Set current Node as visited
+            mazeMatrix[row][col].setVisited();
             visited[mazeMatrix[row][col].getName()-1] = true;
             visitedRow[vertex-1] = row;
             visitedCol[vertex-1] = col;
@@ -112,6 +113,7 @@ public class MazeGenerator
                 else
                 {
                     direction = mazeMatrix[row][col].getDirection();
+                    System.out.println("direction: " + direction);
                 }
                 
                 // Check if direction is possible to travel to    
@@ -126,8 +128,9 @@ public class MazeGenerator
                             mazeMatrix[row][col].setUpNode(mazeMatrix[row-1][col]);
                             mazeMatrix[row-1][col].setDownNode(mazeMatrix[row][col]);
 
+                            int tempRow = row;
                             row = mazeMatrix[row-1][col].getRow();
-                            col = mazeMatrix[row-1][col].getCol();
+                            col = mazeMatrix[tempRow-1][col].getCol();
                         }
                         break;
 
@@ -140,8 +143,9 @@ public class MazeGenerator
                             mazeMatrix[row][col].setRightNode(mazeMatrix[row][col+1]);
                             mazeMatrix[row][col+1].setLeftNode(mazeMatrix[row][col]);
 
+                            int tempRow = row;
                             row = mazeMatrix[row][col+1].getRow();
-                            col = mazeMatrix[row][col+1].getCol();
+                            col = mazeMatrix[tempRow][col+1].getCol();
                         }
                         break;
 
@@ -154,8 +158,9 @@ public class MazeGenerator
                             mazeMatrix[row][col].setDownNode(mazeMatrix[row+1][col]);
                             mazeMatrix[row+1][col].setUpNode(mazeMatrix[row][col]);
 
+                            int tempRow = row;
                             row = mazeMatrix[row+1][col].getRow();
-                            col = mazeMatrix[row+1][col].getCol();
+                            col = mazeMatrix[tempRow+1][col].getCol();
                         }
 
                         break;
@@ -169,25 +174,98 @@ public class MazeGenerator
                             mazeMatrix[row][col].setLeftNode(mazeMatrix[row][col-1]);
                             mazeMatrix[row][col-1].setRightNode(mazeMatrix[row][col]);
 
+                            int tempRow = row;
                             row = mazeMatrix[row][col-1].getRow();
-                            col = mazeMatrix[row][col-1].getCol();
+                            col = mazeMatrix[tempRow][col-1].getCol();
                         }
-                        break;
-                    
+                        break;  
                 }
-                
-                // No valid nodes to travel too
-                if(nodeFound == false)
-                {
-                    // Back
+            }   
 
-                }
-
-                //System.out.println(direction);
-            }
             
-        } 
-  
+            // No valid nodes to travel too
+            if(nodeFound == false )
+            {
+                System.out.println("No Nodes");
+                
+                for(int stepVisited = vertex-2; stepVisited >= 0 && nodeFound == false; stepVisited--)
+                {
+                    System.out.println(stepVisited + "  " + mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].getName());
 
-    }
+                    while(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].isEmpty() == false && nodeFound == false)
+                    {
+                       int newDirection = mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].getDirection();
+
+                       switch(newDirection)
+                       {    
+                            // UP
+                            case 1:
+                                if(mazeMatrix[visitedRow[stepVisited]-1][visitedCol[stepVisited]].getVisited() == false)
+                                {
+                                    nodeFound = true;
+
+                                    mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].setUpNode(mazeMatrix[visitedRow[stepVisited]-1][visitedCol[stepVisited]]);
+                                    mazeMatrix[visitedRow[stepVisited]-1][visitedCol[stepVisited]].setDownNode(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]]);
+
+                                    row =   mazeMatrix[visitedRow[stepVisited]-1][visitedCol[stepVisited]].getRow();
+                                    col =   mazeMatrix[visitedRow[stepVisited]-1][visitedCol[stepVisited]].getCol();
+                                }
+                                break;
+
+                            // RIGHT
+                            case 2:
+                                if(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]+1].getVisited() == false)
+                                {
+                                    nodeFound = true;
+
+                                    mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].setRightNode(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]+1]);
+                                    mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]+1].setLeftNode(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]]);
+
+                                    row =  mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]+1].getRow();
+                                    col =  mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]+1].getCol();
+                                }
+                                break;
+
+                            // DOWN
+                            case 3:
+                                if(mazeMatrix[visitedRow[stepVisited]+1][visitedCol[stepVisited]].getVisited() == false)
+                                {
+                                    nodeFound = true;
+
+                                    mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].setDownNode(mazeMatrix[visitedRow[stepVisited]+1][visitedCol[stepVisited]]);
+                                    mazeMatrix[visitedRow[stepVisited]+1][visitedCol[stepVisited]].setUpNode(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]]);
+
+                                    row =  mazeMatrix[visitedRow[stepVisited]+1][visitedCol[stepVisited]].getRow();
+                                    col =  mazeMatrix[visitedRow[stepVisited]+1][visitedCol[stepVisited]].getCol();
+                                }
+                                break;
+
+                            // LEFT
+                            case 4:
+                                if(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]-1].getVisited() == false)
+                                {
+                                    nodeFound = true;
+
+                                    mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].setLeftNode(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]-1]);
+                                    mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]-1].setRightNode(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]]);
+
+                                    row =  mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]-1].getRow();
+                                    col =  mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]-1].getCol();
+                                }
+                                break;
+                       }
+                    }
+
+
+
+                }
+
+            }
+
+        }
+
+    } 
+
+
+
 }
