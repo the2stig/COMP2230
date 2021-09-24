@@ -97,8 +97,8 @@ public class MazeGenerator
             visitedRow[vertex-1] = row;
             visitedCol[vertex-1] = col;
 
-            System.out.println("Vertex: " + vertex + "    Current Node: " + row + " " + col + "  " + mazeMatrix[row][col].getName());
-            System.out.println();
+            //System.out.println("Vertex: " + vertex + "    Current Node: " + row + " " + col + "  " + mazeMatrix[row][col].getName());
+            //System.out.println();
 
             // Find next valid node 
             boolean nodeFound = false;
@@ -114,7 +114,7 @@ public class MazeGenerator
                 else
                 {
                     direction = mazeMatrix[row][col].getDirection();
-                    System.out.println("direction: " + direction);
+                    //System.out.println("direction: " + direction);
                 }
                 
                 // Check if direction is possible to travel to    
@@ -187,11 +187,11 @@ public class MazeGenerator
             // No valid nodes to travel too
             if(nodeFound == false )
             {
-                System.out.println("No Nodes");
+                //System.out.println("No Nodes");
                 
                 for(int stepVisited = vertex-2; stepVisited >= 0 && nodeFound == false; stepVisited--)
                 {
-                    System.out.println(stepVisited + "  " + mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].getName());
+                    //System.out.println(stepVisited + "  " + mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].getName());
 
                     while(mazeMatrix[visitedRow[stepVisited]][visitedCol[stepVisited]].isEmpty() == false && nodeFound == false)
                     {
