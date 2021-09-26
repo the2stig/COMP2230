@@ -12,17 +12,17 @@ public class MazeGenerator
         int length =Integer.valueOf(args[1]);
 
         // Create Node Matrix
-
         Node[][] mazeMatrix = new Node[width][length];
 
 
         // Populate Node Matrix
-
-        int nodeNumber = 1;
+        int nodeNumber = 0;
         for (int i = 0; i < width; i++) 
         {
             for (int j = 0; j < length; j++) 
             {
+                nodeNumber++;
+
                 // Determines a nodes possible directions to travel in
                 Stack<Integer> possibleDirections = new Stack<Integer>();
                 // Checks to see if the node is not on the bottom row
@@ -55,8 +55,6 @@ public class MazeGenerator
                 Collections.shuffle(possibleDirections);
 
                 mazeMatrix[i][j] = new Node(i, j, nodeNumber, possibleDirections);
-
-                nodeNumber++;
             } 
         }
 
@@ -272,7 +270,7 @@ public class MazeGenerator
         {
             for (int j = 0; j < length; j++) 
             {
-                output += mazeMatrix[i][j].getCellOpenness(); 
+                output += mazeMatrix[i][j].calculateCellOpenness(); 
             } 
         }
 

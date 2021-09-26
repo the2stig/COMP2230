@@ -7,7 +7,7 @@ public class Node {
   private Node up;
   private Node down;  
 
-  private int data;
+  private int cellOpenness;
   private int row;
   private int col;
   private int name;
@@ -25,13 +25,28 @@ public class Node {
     this.left = null;
     this.up = null;
     this.down = null;
-    this.data = -1;
+    this.cellOpenness = -1;
     this.row = tRow;
     this.col = tCol;
     this.name = index;
     this.startNode = false;
     this.endNode = false;
     this.possibleDirections = tPossibleDirections;
+  }
+
+  public Node(int tRow, int tCol, int index) 
+  {
+    this.right = null;
+    this.left = null;
+    this.up = null;
+    this.down = null;
+    this.cellOpenness = -1;
+    this.row = tRow;
+    this.col = tCol;
+    this.name = index;
+    this.startNode = false;
+    this.endNode = false;
+    this.possibleDirections = new Stack<Integer>();
   }
 
   public void setRightNode(Node node) 
@@ -74,14 +89,14 @@ public class Node {
     return this.down;
   }
  
-  public void setData(int tData) 
+  public void setCellOpenness(int tCellOpenness) 
   {
-    this.data = tData;
+    this.cellOpenness = tCellOpenness;
   }
 
-  public int getData() 
+  public int getCellOpenness() 
   {
-    return this.data;
+    return this.cellOpenness;
   }
 
     public void setRow(int tRow) 
@@ -154,7 +169,7 @@ public class Node {
     return this.possibleDirections.empty();
   }
 
-  public int getCellOpenness()
+  public int calculateCellOpenness()
   {
     int cellOpenness = 0;
 
