@@ -16,6 +16,9 @@ public class MazeGenerator
 
 
         // Populate Node Matrix
+        Random rand = new Random();
+        rand.setSeed(1); 
+        
         int nodeNumber = 0;
         for (int i = 0; i < width; i++) 
         {
@@ -52,15 +55,13 @@ public class MazeGenerator
                     possibleDirections.push(4); // Left:4
                     //mazeMatrix[i][j].setLeftNode(mazeMatrix[i][j-1]);
                 }
-                Collections.shuffle(possibleDirections);
+                Collections.shuffle(possibleDirections, rand);
 
                 mazeMatrix[i][j] = new Node(i, j, nodeNumber, possibleDirections);
             } 
         }
 
         // Generate random starting Node
-
-        Random rand = new Random(); 
         int startWidth = rand.nextInt(width); 
         int startLength = rand.nextInt(length);
         mazeMatrix[startWidth][startLength].setStartNode();
