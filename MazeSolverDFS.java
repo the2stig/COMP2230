@@ -1,32 +1,55 @@
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class MazeSolverDFS 
 {
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) 
     {
-        System.out.println("MazeSolverDFS");
+        //Get input file from parameters
+        String inputFile = "out.dat";
 
-        // Read maze from input File
-        BufferedReader inputFile = new BufferedReader(new FileReader(args[0]));
-        String input = inputFile.readLine();
+        //Load input file file
+        String contents = "";
 
-        inputFile.close();
+        try{
+            contents = new String(Files.readAllBytes(Paths.get(inputFile)));
+        }catch(IOException e){
+            System.out.println("Invalid file");
+        }
 
-        System.out.println(input);
+        //Extract required information from file
 
-        // Split input into relevant parts
-        String[] inputParts = input.split(":");
-        String[] widthAndLength = inputParts[0].split(",");
+        String[] parameters = contents.split(":");
 
-        int width = Integer.valueOf(widthAndLength[0]);
-        int length = Integer.valueOf(widthAndLength[1]);
+        String[] widthLength = parameters[0].split(",");
+
         
 
-        int startNode = Integer.valueOf(inputParts[1]);
-        int endNode = Integer.valueOf(inputParts[2]);
+        String startNode = parameters[1];
+        String endNode = parameters[2];
 
-        String cellOpennessList = inputParts[3];
+        String cellOpennessList = parameters[3];
+
+        System.out.println("n: " + widthLength[0]);
+        System.out.println("m: " + widthLength[1]);
+
+        System.out.println("start Node: " + startNode);
+        System.out.println("end Node: " + endNode);
+
+        System.out.println("cell Openness List: " + cellOpennessList);
+
+        int mazeWidth = Integer.parseInt(widthLength[0]);
+        int mazeHeight = Integer.parseInt(widthLength[1]);
+
+        //Create a new matrix and load node into it
+        MazeMatrix mazeMatrix = new MazeMatrix(mazeWidth,mazeHeight);
+
+        //Load cell openings 
+        mazeMatrix.addCellOpenings(cellOpennessList);     
+
+        //Check nodes connections
+        System.out.println(mazeMatrix.nodeConnections(0, 0));
 
         // Create Node Matrix
         Node[][] mazeMatrix = new Node[width][length];
@@ -49,15 +72,20 @@ public class MazeSolverDFS
                     // Right
                     case '1':
                         mazeMatrix[i][j].setRightNode(mazeMatrix[i][j+1]);
+                        mazeMatrix[i][j+1].setLeftNode(mazeMatrix[i][j]);
                         break;
                     // Down
                     case '2':
                         mazeMatrix[i][j].setDownNode(mazeMatrix[i+1][j]);
+                        mazeMatrix[i+1][j].setUpNode(mazeMatrix[i][j]);
                         break;
                     // Both
                     case '3':
                         mazeMatrix[i][j].setRightNode(mazeMatrix[i][j+1]);
+                        mazeMatrix[i][j+1].setLeftNode(mazeMatrix[i][j]);
+
                         mazeMatrix[i][j].setDownNode(mazeMatrix[i+1][j]);
+                        mazeMatrix[i+1][j].setUpNode(mazeMatrix[i][j]);
                      break;
                 }
 
@@ -77,3 +105,4 @@ public class MazeSolverDFS
 
     }
 }
+
