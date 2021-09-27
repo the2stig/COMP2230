@@ -18,6 +18,10 @@ public class Node {
 
   private Stack<Integer> possibleDirections;
 
+  public Node(int id){
+    this.name = id;
+  }
+
 
   public Node(int tRow, int tCol, int index, Stack<Integer> tPossibleDirections) 
   {
@@ -48,6 +52,7 @@ public class Node {
     this.endNode = false;
     this.possibleDirections = new Stack<Integer>();
   }
+ 
 
   public void setRightNode(Node node) 
   {
