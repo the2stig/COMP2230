@@ -1,10 +1,23 @@
+import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Queue;
+import java.util.LinkedList;
+
+
+
 public class MazeMatrix {
     private Node[][] matrix;
+
+    private Node startNode;
+    private Node endNode;
+
     private int width;
     private int height;
 
-    public MazeMatrix(int width,int height,String openings){
+    private int solvingSteps;
 
+    public MazeMatrix(int width,int height,String openings){
         matrix = new Node[height][width];
 
         this.height = height;
@@ -27,11 +40,12 @@ public class MazeMatrix {
         for(int i =0;i<rows;i++){
             for(int j=0;j<width;j++){
                 int postion = width*i + j;
-                setOpenings(opens[postion],matrix[i][j]);
+                linkNodes(opens[postion],i,j);
             }
 
         }
-        
+
+              
     }
 
     public int getWidth() {
@@ -42,42 +56,160 @@ public class MazeMatrix {
         return height;
     }
 
-    public void addCellOpenings(){
-        
-
-    }
-
     private Node getNode(int row,int col){
         return matrix[row][col];
     }
 
-    private void linkNodes(){
-
-        
-        int row = current.getRow();
-        int col = current.getCol();
-
+    private void linkNodes(char opening,int i,int j){
         switch (opening){
             case '0':
-                //Check node in same row column-1 to be ethier 1 or 3 
-                current.setLeftNode(getNode(row, col-1));
+
             break;
             case '1':
-                current.setRightNode(getNode(row, col+1));
+                matrix[i][j].setRightNode(matrix[i][j+1]);
+                matrix[i][j+1].setLeftNode(matrix[i][j]);
             break;
             case '2':
-                current.setDownNode(getNode(row+1, col));
+                matrix[i][j].setDownNode(matrix[i+1][j]);
+                matrix[i+1][j].setUpNode(matrix[i][j]);
             break;
             case '3':
-                //Check node
-                current.setRightNode(getNode(row, col+1));
-                current.setDownNode(getNode(row+1, col));
+                matrix[i][j].setRightNode(matrix[i][j+1]);
+                matrix[i][j+1].setLeftNode(matrix[i][j]);
+
+                matrix[i][j].setDownNode(matrix[i+1][j]);
+                matrix[i+1][j].setUpNode(matrix[i][j]);
             break;
+        }  
+    }
+
+    public void setStartNode(int postion){
+        int row = Math.floorDiv(postion,width);
+
+        if (row != 0 ){
+            row--;
         }
+
+        int col = postion % width;
+
+        if (col != 0 ){
+            col--;
+        }
+
+
+        //Calculate start node postion
+        startNode = getNode(row, col);
+    }
+
+    public void setEndNode(int postion){
+        int row = Math.floorDiv(postion,width);
+
+        if (row != 0 ){
+            row--;
+        }
+
+        int col = postion % width;
+
+        if (col != 0 ){
+            col--;
+        }
+
+        endNode = getNode(row, col);
     }
 
     public int nodeConnections(int row,int col){
         return getNode(row, col).getCellOpenness();
+    }
+
+    public ArrayList<Integer> solveDFS(){
+        Stack<Node> stack = new Stack<Node>();
+
+        stack.push(startNode);
+        startNode.setVisited();
+
+        while(!stack.empty()){
+            solvingSteps++;
+            Node currentNode = stack.pop();
+
+            if (currentNode.getName() == endNode.getName()){
+                break;
+            }
+
+            //Get all unvisted nodes
+            ArrayList<Node> unvisited = currentNode.getAllUnivistedNodes();
+
+            for(Node node : unvisited){
+                node.setVisited();
+                node.setParent(currentNode);
+
+                //Push to stack
+                stack.push(node);
+            }
+        }
+
+        return findPath();
+    }
+
+    private ArrayList<Integer> findPath(){
+        ArrayList<Integer> path = new ArrayList<>();
+
+        //Walk back using parent
+        Node presentNode = endNode;
+
+        while(presentNode.getParent() != null){
+            path.add(presentNode.getName());
+
+            presentNode = presentNode.getParent();
+        }
+
+        //Flip the path in reverse order
+        Collections.reverse(path);
+
+        return path;
+    }
+
+    public ArrayList<Integer> solveBFS(){
+        Queue<Node> queue = new LinkedList<>();
+
+        startNode.setVisited();
+        queue.add(startNode);
+
+        while(!queue.isEmpty()){
+            solvingSteps++;
+            Node currentNode = queue.poll();
+
+            if (currentNode.getName() == endNode.getName()){
+                break;
+            }
+
+            //Get all unvisted nodes
+            ArrayList<Node> unvisited = currentNode.getAllUnivistedNodes();
+
+            for(Node node : unvisited){
+                node.setVisited();
+                node.setParent(currentNode);
+
+                //Add to queue
+                queue.add(node);
+            }
+
+        }
+
+        return findPath();
+    }
+
+    public void resetPath(){
+        solvingSteps = 0;
+        for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++){
+                matrix[i][j].setParent(null);
+                matrix[i][j].unsetVisit();
+            }
+        }
+    }
+
+    public int getSolveSteps(){
+        return solvingSteps;
     }
 
 }

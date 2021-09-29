@@ -7,6 +7,7 @@ public class Node {
   private Node up;
   private Node down;  
 
+  private Node parent;
   private int cellOpenness;
   private int row;
   private int col;
@@ -52,6 +53,8 @@ public class Node {
     this.endNode = false;
     this.possibleDirections = new Stack<Integer>();
   }
+
+
  
 
   public void setRightNode(Node node) 
@@ -192,5 +195,60 @@ public class Node {
     }
 
     return cellOpenness;
+  }
+
+  public ArrayList<Node> getAllUnivistedNodes(){
+
+    ArrayList<Node> unvisited = new ArrayList<>();
+    //Check up
+
+    if(up != null){
+      //Check if node hasn't been visted
+      if(!up.getVisited()){
+        unvisited.add(up);
+      }
+    }
+
+    //Check down 
+
+    if(down != null){
+      //Check if node hasn't been visted
+      if(!down.getVisited()){
+        unvisited.add(down);
+      }
+    }
+
+    //Check left
+
+    if(left != null){
+      //Check if node hasn't been visted
+      if(!left.getVisited()){
+        unvisited.add(left);
+      }
+    }
+
+    //Check right
+
+    if(right != null){
+      //Check if node hasn't been visted
+      if(!right.getVisited()){
+        unvisited.add(right);
+      }
+    }
+
+    //Return array of unvisted nodes
+    return unvisited;
+  }
+
+  public void setParent(Node node){
+    parent = node;
+  }
+
+  public Node getParent(){
+    return parent;
+  }
+
+  public void unsetVisit(){
+    visited = false;
   }
 }

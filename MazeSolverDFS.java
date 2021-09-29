@@ -7,7 +7,7 @@ public class MazeSolverDFS
     public static void main(String[] args) 
     {
         //Get input file from parameters
-        String inputFile = "out.dat";
+        String inputFile = "maze.dat";
 
         //Load input file file
         String contents = "";
@@ -42,65 +42,36 @@ public class MazeSolverDFS
         int mazeWidth = Integer.parseInt(widthLength[0]);
         int mazeHeight = Integer.parseInt(widthLength[1]);
 
+        int startPostion = Integer.parseInt(startNode);
+        int endPostion = Integer.parseInt(endNode);
+
         //Create a new matrix and load node into it
-        MazeMatrix mazeMatrix = new MazeMatrix(mazeWidth,mazeHeight);
+        MazeMatrix mazeMatrix = new MazeMatrix(mazeWidth,mazeHeight,cellOpennessList);
 
-        //Load cell openings 
-        mazeMatrix.addCellOpenings(cellOpennessList);     
+        //Set start
+        mazeMatrix.setStartNode(startPostion);
 
-        //Check nodes connections
-        System.out.println(mazeMatrix.nodeConnections(0, 0));
+        //Set End Node
+        mazeMatrix.setEndNode(endPostion);
 
-        // Create Node Matrix
-        Node[][] mazeMatrix = new Node[width][length];
+       
 
-        // Populate Node Matrix and assign allowed directions
-        int nodeNumber = 0;
-        for (int i = 0; i < width; i++) 
-        {
-            for (int j = 0; j < length; j++) 
-            {   
-                nodeNumber++;
-                mazeMatrix[i][j] = new Node(i, j, nodeNumber);
+        //Solve with DFS
+        System.out.println("DEPTH FIRST SEARCH");
+        
+        System.out.println(mazeMatrix.solveDFS());
+        System.out.println(mazeMatrix.getSolveSteps());
 
-                // Assign cell openness
-                mazeMatrix[i][j].setCellOpenness(cellOpennessList.charAt(nodeNumber-1));
 
-                // Assign allowed directions
-                switch (cellOpennessList.charAt(nodeNumber-1)) 
-                {
-                    // Right
-                    case '1':
-                        mazeMatrix[i][j].setRightNode(mazeMatrix[i][j+1]);
-                        mazeMatrix[i][j+1].setLeftNode(mazeMatrix[i][j]);
-                        break;
-                    // Down
-                    case '2':
-                        mazeMatrix[i][j].setDownNode(mazeMatrix[i+1][j]);
-                        mazeMatrix[i+1][j].setUpNode(mazeMatrix[i][j]);
-                        break;
-                    // Both
-                    case '3':
-                        mazeMatrix[i][j].setRightNode(mazeMatrix[i][j+1]);
-                        mazeMatrix[i][j+1].setLeftNode(mazeMatrix[i][j]);
+        mazeMatrix.resetPath();
 
-                        mazeMatrix[i][j].setDownNode(mazeMatrix[i+1][j]);
-                        mazeMatrix[i+1][j].setUpNode(mazeMatrix[i][j]);
-                     break;
-                }
 
-                // Set start Node
-                if(nodeNumber == startNode)
-                {
-                    mazeMatrix[i][j].setStartNode();
-                }
-                // Set end Node
-                else if(nodeNumber == endNode)
-                {
-                    mazeMatrix[i][j].setEndNode();
-                }
-            } 
-        }
+        //Solve with BFS
+        System.out.println("BREADTH FIRST SEARCH");
+
+        System.out.println(mazeMatrix.solveBFS());
+        System.out.println(mazeMatrix.getSolveSteps());
+
 
 
     }
