@@ -15,7 +15,7 @@ public class MazeMatrix {
     private int width;
     private int height;
 
-    private int solvingSteps;
+    private int pathSize = -1;
 
     public MazeMatrix(int height,int width,String openings,int startPostion, int endPostion){
         matrix = new Node[height][width];
@@ -96,14 +96,16 @@ public class MazeMatrix {
     }
 
     public ArrayList<Integer> solveDFS(){
+        ArrayList<Integer> pathSteps = new ArrayList<>();
         Stack<Node> stack = new Stack<Node>();
 
         stack.push(startNode);
         startNode.setVisited();
 
         while(!stack.empty()){
-            solvingSteps++;
+            pathSize++;
             Node currentNode = stack.pop();
+            pathSteps.add(currentNode.getName());
             currentNode.setVisited();
 
             if (currentNode.getName() == endNode.getName()){
@@ -126,10 +128,10 @@ public class MazeMatrix {
             }
         }
 
-        return findPath();
+        return pathSteps;
     }
 
-    private ArrayList<Integer> findPath(){
+    public ArrayList<Integer> findPath(){
         ArrayList<Integer> path = new ArrayList<>();
 
         //Walk back using parent
@@ -156,9 +158,11 @@ public class MazeMatrix {
         queue.add(startNode);
 
         while(!queue.isEmpty()){
-            solvingSteps++;
+            pathSize++;
             Node currentNode = queue.poll();
-
+            
+            currentNode.setVisited();
+            
             if (currentNode.getName() == endNode.getName()){
                 break;
             }
@@ -167,7 +171,7 @@ public class MazeMatrix {
             ArrayList<Node> unvisited = currentNode.getAllUnivistedNodes();
 
             for(Node node : unvisited){
-                node.setVisited();
+               
                 node.setParent(currentNode);
 
                 //Add to queue
@@ -179,18 +183,8 @@ public class MazeMatrix {
         return findPath();
     }
 
-    public void resetPath(){
-        solvingSteps = 0;
-        for(int i=0;i<height;i++){
-            for(int j=0;j<width;j++){
-                matrix[i][j].setParent(null);
-                matrix[i][j].unsetVisit();
-            }
-        }
-    }
-
-    public int getSolveSteps(){
-        return solvingSteps;
+    public int getPathSize(){
+        return pathSize;
     }
 
 }

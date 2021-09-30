@@ -35,13 +35,7 @@ public class MazeSolverDFS
 
         String cellOpennessList = parameters[3];
 
-        System.out.println("width: " + widthLength[0]);
-        System.out.println("height: " + widthLength[1]);
-
-        System.out.println("start Node: " + startNode);
-        System.out.println("end Node: " + endNode);
-
-        System.out.println("cell Openness List: " + cellOpennessList);
+        System.out.println(contents);
 
         int mazeWidth = Integer.parseInt(widthLength[0]);
         int mazeHeight = Integer.parseInt(widthLength[1]);
@@ -62,8 +56,9 @@ public class MazeSolverDFS
         ArrayList<Integer> dfsPath = mazeMatrix.solveDFS();
 
         System.out.println("PATH: " + dfsPath);
-        System.out.println("PATH SIZE: "+ dfsPath.size());
-        System.out.println("PATH OPERATION STEPS:" + mazeMatrix.getSolveSteps());
+        System.out.println("OPTIMAL PATH: "+ mazeMatrix.findPath());
+        System.out.println("PATH SIZE:" + mazeMatrix.getPathSize());
+
 
 
         double endTime = new Date().getTime();
@@ -71,12 +66,6 @@ public class MazeSolverDFS
         double timeTaken = endTime - startTime;
 
         System.out.println("Time taken: " + timeTaken + "ms");
-
-
-        
-
-
-
     }
 }
 

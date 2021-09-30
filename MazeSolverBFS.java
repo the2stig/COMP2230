@@ -34,14 +34,7 @@ public class MazeSolverBFS {
 
         String cellOpennessList = parameters[3];
 
-        System.out.println("MAZE PARAMETERS");
-        System.out.println();
-
-        System.out.println("width: " + widthLength[0]);
-        System.out.println("height: " + widthLength[1]);
-        System.out.println("start Node: " + startNode);
-        System.out.println("end Node: " + endNode);
-        System.out.println("cell Openness List: " + cellOpennessList);
+        System.out.println(contents);
 
         System.out.println();
 
@@ -62,8 +55,8 @@ public class MazeSolverBFS {
         ArrayList<Integer> bfsPath = mazeMatrix.solveBFS();
 
         System.out.println("PATH: " + bfsPath);
-        System.out.println("PATH SIZE: "+ bfsPath.size());
-        System.out.println("PATH OPERATION STEPS:" + mazeMatrix.getSolveSteps());
+        System.out.println("PATH SIZE:" + mazeMatrix.getPathSize());
+        System.out.println("OPTIMAL PATH: "+ mazeMatrix.findPath());
 
 
         double endTime = new Date().getTime();
