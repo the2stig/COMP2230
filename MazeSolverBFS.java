@@ -61,7 +61,7 @@ public class MazeSolverBFS {
 
         double timeTaken = endTime - startTime;
 
-        System.out.println("TIME TAKEN: " + timeTaken + "ms");
+        System.out.println("TIME TAKEN: " + timeTaken + " ms");
         
     }
 }
