@@ -34,9 +34,7 @@ public class MazeSolverBFS {
 
         String cellOpennessList = parameters[3];
 
-        System.out.println(contents);
-
-        System.out.println();
+        System.out.println(contents + "\n");
 
         int mazeWidth = Integer.parseInt(widthLength[0]);
         int mazeHeight = Integer.parseInt(widthLength[1]);
@@ -63,7 +61,7 @@ public class MazeSolverBFS {
 
         double timeTaken = endTime - startTime;
 
-        System.out.println("Time taken: " + timeTaken + "ms");
+        System.out.println("TIME TAKEN: " + timeTaken + "ms");
         
     }
 }

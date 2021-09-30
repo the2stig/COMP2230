@@ -152,6 +152,7 @@ public class MazeMatrix {
     }
 
     public ArrayList<Integer> solveBFS(){
+        ArrayList<Integer> pathSteps = new ArrayList<>();
         Queue<Node> queue = new LinkedList<>();
 
         startNode.setVisited();
@@ -160,9 +161,9 @@ public class MazeMatrix {
         while(!queue.isEmpty()){
             pathSize++;
             Node currentNode = queue.poll();
-            
+            pathSteps.add(currentNode.getName());
             currentNode.setVisited();
-            
+
             if (currentNode.getName() == endNode.getName()){
                 break;
             }
@@ -170,17 +171,18 @@ public class MazeMatrix {
             //Get all unvisted nodes
             ArrayList<Node> unvisited = currentNode.getAllUnivistedNodes();
 
+            Collections.reverse(unvisited);
+
             for(Node node : unvisited){
-               
+
                 node.setParent(currentNode);
 
                 //Add to queue
                 queue.add(node);
             }
-
         }
 
-        return findPath();
+        return pathSteps;
     }
 
     public int getPathSize(){
