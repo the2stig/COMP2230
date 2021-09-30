@@ -104,8 +104,7 @@ public class MazeMatrix {
         while(!stack.empty()){
             solvingSteps++;
             Node currentNode = stack.pop();
-            
-            System.out.println(currentNode.getName());
+            currentNode.setVisited();
 
             if (currentNode.getName() == endNode.getName()){
                 break;
@@ -114,8 +113,12 @@ public class MazeMatrix {
             //Get all unvisted nodes
             ArrayList<Node> unvisited = currentNode.getAllUnivistedNodes();
 
+            if(currentNode.getParent() != null && unvisited.size() == 0) 
+            {
+                stack.push(currentNode.getParent());
+            }
+
             for(Node node : unvisited){
-                node.setVisited();
                 node.setParent(currentNode);
 
                 //Push to stack
