@@ -9,10 +9,10 @@ public class MazeGenerator
         System.out.println("MazeGenerator");
 
         int width = Integer.valueOf(args[0]);
-        int length =Integer.valueOf(args[1]);
+        int height =Integer.valueOf(args[1]);
 
         // Create Node Matrix
-        Node[][] mazeMatrix = new Node[width][length];
+        Node[][] mazeMatrix = new Node[width][height];
 
 
         // Populate Node Matrix
@@ -22,7 +22,7 @@ public class MazeGenerator
         int nodeNumber = 0;
         for (int i = 0; i < width; i++) 
         {
-            for (int j = 0; j < length; j++) 
+            for (int j = 0; j < height; j++) 
             {
                 nodeNumber++;
 
@@ -43,7 +43,7 @@ public class MazeGenerator
                 }
 
                 // Checks to see if the Node is not on the right most column 
-                if(j < length - 1)
+                if(j < height - 1)
                 {
                     possibleDirections.push(2); // Right:2
                     //mazeMatrix[i][j].setRightNode(mazeMatrix[i][j+1]);
@@ -63,29 +63,29 @@ public class MazeGenerator
 
         // Generate random starting Node
         int startWidth = rand.nextInt(width); 
-        int startLength = rand.nextInt(length);
-        mazeMatrix[startWidth][startLength].setStartNode();
+        int startHeight = rand.nextInt(height);
+        mazeMatrix[startWidth][startHeight].setStartNode();
 
         
         // DFS Maze Generation setup
 
-        boolean[] visited = new boolean[width*length];
-        for (int i = 0; i < width*length; i++) 
+        boolean[] visited = new boolean[width*height];
+        for (int i = 0; i < width*height; i++) 
         {   
             visited[i] = false;
         }
 
         int vertex = 0;
         int row = startWidth;
-        int col = startLength;
-        int[] visitedRow = new int[width*length];
-        int[] visitedCol = new int[width*length];
+        int col = startHeight;
+        int[] visitedRow = new int[width*height];
+        int[] visitedCol = new int[width*height];
 
 
 
         // Execute DFS Maze Generation 
         
-        while(vertex < width*length)
+        while(vertex < width*height)
         {
             // Increase vertex counter
             vertex++;
@@ -265,11 +265,11 @@ public class MazeGenerator
         }
 
         // Generate output string
-        String output = width + "," + length + ":" + mazeMatrix[startWidth][startLength].getName() + ":" + mazeMatrix[visitedRow[length*width-1]][visitedCol[length*width-1]].getName() + ":";
+        String output = width + "," + height + ":" + mazeMatrix[startWidth][startHeight].getName() + ":" + mazeMatrix[visitedRow[height*width-1]][visitedCol[height*width-1]].getName() + ":";
         
         for (int i = 0; i < width; i++) 
         {
-            for (int j = 0; j < length; j++) 
+            for (int j = 0; j < height; j++) 
             {
                 output += mazeMatrix[i][j].calculateCellOpenness(); 
             } 
