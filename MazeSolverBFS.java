@@ -5,11 +5,10 @@ import java.util.ArrayList;
 
 import java.util.Date;
 
+public class MazeSolverBFS {
+    
+    public static void main(String[] args) {
 
-public class MazeSolverDFS 
-{
-    public static void main(String[] args) 
-    {
         //Get input file from parameters
         String inputFile = "maze.dat";
 
@@ -35,13 +34,16 @@ public class MazeSolverDFS
 
         String cellOpennessList = parameters[3];
 
+        System.out.println("MAZE PARAMETERS");
+        System.out.println();
+
         System.out.println("width: " + widthLength[0]);
         System.out.println("height: " + widthLength[1]);
-
         System.out.println("start Node: " + startNode);
         System.out.println("end Node: " + endNode);
-
         System.out.println("cell Openness List: " + cellOpennessList);
+
+        System.out.println();
 
         int mazeWidth = Integer.parseInt(widthLength[0]);
         int mazeHeight = Integer.parseInt(widthLength[1]);
@@ -58,17 +60,15 @@ public class MazeSolverDFS
         //Set End Node
         mazeMatrix.setEndNode(endPostion);
 
-       
-
         double startTime = new Date().getTime();
 
-        //Solve with DFS
-        System.out.println("DEPTH FIRST SEARCH");
+        //Solve with BFS
+        System.out.println("BREADTH FIRST SEARCH");
 
-        ArrayList<Integer> dfsPath = mazeMatrix.solveDFS();
+        ArrayList<Integer> bfsPath = mazeMatrix.solveBFS();
 
-        System.out.println("PATH: " + dfsPath);
-        System.out.println("PATH SIZE: "+ dfsPath.size());
+        System.out.println("PATH: " + bfsPath);
+        System.out.println("PATH SIZE: "+ bfsPath.size());
         System.out.println("PATH OPERATION STEPS:" + mazeMatrix.getSolveSteps());
 
 
@@ -77,12 +77,6 @@ public class MazeSolverDFS
         double timeTaken = endTime - startTime;
 
         System.out.println("Time taken: " + timeTaken + "ms");
-
-
         
-
-
-
     }
 }
-

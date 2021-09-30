@@ -200,17 +200,10 @@ public class Node {
   public ArrayList<Node> getAllUnivistedNodes(){
 
     ArrayList<Node> unvisited = new ArrayList<>();
-    //Check up
-
-    if(up != null){
-      //Check if node hasn't been visted
-      if(!up.getVisited()){
-        unvisited.add(up);
-      }
-    }
+    
+    
 
     //Check down 
-
     if(down != null){
       //Check if node hasn't been visted
       if(!down.getVisited()){
@@ -218,8 +211,15 @@ public class Node {
       }
     }
 
-    //Check left
+    //Check right
+    if(right != null){
+      //Check if node hasn't been visted
+      if(!right.getVisited()){
+        unvisited.add(right);
+      }
+    }
 
+    //Check left
     if(left != null){
       //Check if node hasn't been visted
       if(!left.getVisited()){
@@ -227,12 +227,11 @@ public class Node {
       }
     }
 
-    //Check right
-
-    if(right != null){
+    //Check up
+    if(up != null){
       //Check if node hasn't been visted
-      if(!right.getVisited()){
-        unvisited.add(right);
+      if(!up.getVisited()){
+        unvisited.add(up);
       }
     }
 
