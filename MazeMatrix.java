@@ -86,11 +86,16 @@ public class MazeMatrix {
     public void setStartNode(int postion){
         int row = Math.floorDiv(postion,width);
 
+        if (row != 0 ){
+            row--;
+        }
+
         int col = postion % width;
 
-        if( col != 0){
+        if (col != 0 ){
             col--;
         }
+
 
         //Calculate start node postion
         startNode = getNode(row, col);
@@ -99,9 +104,13 @@ public class MazeMatrix {
     public void setEndNode(int postion){
         int row = Math.floorDiv(postion,width);
 
+        if (row != 0 ){
+            row--;
+        }
+
         int col = postion % width;
 
-        if( col != 0){
+        if (col != 0 ){
             col--;
         }
 
@@ -121,8 +130,8 @@ public class MazeMatrix {
         while(!stack.empty()){
             solvingSteps++;
             Node currentNode = stack.pop();
-
-            System.out.println("CURRENT NODE: "+currentNode.getName());
+            
+            System.out.println(currentNode.getName());
 
             if (currentNode.getName() == endNode.getName()){
                 break;
@@ -132,7 +141,6 @@ public class MazeMatrix {
             ArrayList<Node> unvisited = currentNode.getAllUnivistedNodes();
 
             for(Node node : unvisited){
-                
                 node.setVisited();
                 node.setParent(currentNode);
 
