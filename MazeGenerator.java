@@ -15,9 +15,8 @@ public class MazeGenerator
         Node[][] mazeMatrix = new Node[width][height];
 
         // Populate Node Matrix
-        Random rand = new Random();
-        rand.setSeed(1); 
-        
+        Random rand = new Random(); 
+
         int nodeNumber = 0;
         for (int i = 0; i < width; i++) 
         {
@@ -53,7 +52,7 @@ public class MazeGenerator
                 }
 
                 // Randomise directions
-                Collections.shuffle(possibleDirections, rand);
+                Collections.shuffle(possibleDirections);
 
                 mazeMatrix[i][j] = new Node(i, j, nodeNumber, possibleDirections);
             } 
