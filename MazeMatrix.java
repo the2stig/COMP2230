@@ -17,7 +17,7 @@ public class MazeMatrix {
 
     private int solvingSteps;
 
-    public MazeMatrix(int width,int height,String openings){
+    public MazeMatrix(int height,int width,String openings){
         matrix = new Node[height][width];
 
         this.height = height;
@@ -161,6 +161,8 @@ public class MazeMatrix {
 
             presentNode = presentNode.getParent();
         }
+
+        path.add(startNode.getName());
 
         //Flip the path in reverse order
         Collections.reverse(path);

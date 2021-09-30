@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class MazeSolverDFS 
 {
@@ -59,8 +60,10 @@ public class MazeSolverDFS
         //Solve with DFS
         System.out.println("DEPTH FIRST SEARCH");
         
-        System.out.println(mazeMatrix.solveDFS());
+        ArrayList<Integer> dfsPath = mazeMatrix.solveDFS();
+        System.out.println(dfsPath);
         System.out.println(mazeMatrix.getSolveSteps());
+        System.out.println(dfsPath.size());
 
 
         mazeMatrix.resetPath();
@@ -69,8 +72,11 @@ public class MazeSolverDFS
         //Solve with BFS
         System.out.println("BREADTH FIRST SEARCH");
 
-        System.out.println(mazeMatrix.solveBFS());
+        ArrayList<Integer> bfsPath = mazeMatrix.solveBFS();
+
+        System.out.println(bfsPath);
         System.out.println(mazeMatrix.getSolveSteps());
+        System.out.println(bfsPath.size());
 
 
 
