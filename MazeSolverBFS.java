@@ -10,7 +10,7 @@ public class MazeSolverBFS {
     public static void main(String[] args) {
 
         //Get input file from parameters
-        String inputFile = "maze.dat";
+        String inputFile = args[0];
 
         //Load input file file
         String contents = "";
