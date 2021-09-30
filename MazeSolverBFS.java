@@ -53,7 +53,7 @@ public class MazeSolverBFS {
         ArrayList<Integer> bfsPath = mazeMatrix.solveBFS();
 
         System.out.println("PATH: " + bfsPath);
-        System.out.println("PATH SIZE:" + mazeMatrix.getPathSize());
+        System.out.println("PATH STEPS:" + mazeMatrix.getPathSize());
         System.out.println("OPTIMAL PATH: "+ mazeMatrix.findPath());
 
 
