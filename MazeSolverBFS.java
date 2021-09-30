@@ -52,13 +52,7 @@ public class MazeSolverBFS {
         int endPostion = Integer.parseInt(endNode);
 
         //Create a new matrix and load node into it
-        MazeMatrix mazeMatrix = new MazeMatrix(mazeWidth,mazeHeight,cellOpennessList);
-
-        //Set start
-        mazeMatrix.setStartNode(startPostion);
-
-        //Set End Node
-        mazeMatrix.setEndNode(endPostion);
+        MazeMatrix mazeMatrix = new MazeMatrix(mazeWidth,mazeHeight,cellOpennessList,startPostion,endPostion);
 
         double startTime = new Date().getTime();
 

@@ -17,7 +17,7 @@ public class MazeMatrix {
 
     private int solvingSteps;
 
-    public MazeMatrix(int height,int width,String openings){
+    public MazeMatrix(int height,int width,String openings,int startPostion, int endPostion){
         matrix = new Node[height][width];
 
         this.height = height;
@@ -27,6 +27,14 @@ public class MazeMatrix {
         for(int i=0;i<height;i++){
             for(int j=0;j<width;j++){
                 matrix[i][j] = new Node((i*width)+j+1);
+
+                if(matrix[i][j].getName() == startPostion){
+                    startNode = matrix[i][j];
+                }
+
+                if(matrix[i][j].getName() == endPostion){
+                    endNode = matrix[i][j];
+                }
 
                 matrix[i][j].setRow(i);
                 matrix[i][j].setCol(j);
@@ -81,40 +89,6 @@ public class MazeMatrix {
                 matrix[i+1][j].setUpNode(matrix[i][j]);
             break;
         }  
-    }
-
-    public void setStartNode(int postion){
-        int row = Math.floorDiv(postion,width);
-
-        if (row != 0 ){
-            row--;
-        }
-
-        int col = postion % width;
-
-        if (col != 0 ){
-            col--;
-        }
-
-
-        //Calculate start node postion
-        startNode = getNode(row, col);
-    }
-
-    public void setEndNode(int postion){
-        int row = Math.floorDiv(postion,width);
-
-        if (row != 0 ){
-            row--;
-        }
-
-        int col = postion % width;
-
-        if (col != 0 ){
-            col--;
-        }
-
-        endNode = getNode(row, col);
     }
 
     public int nodeConnections(int row,int col){
