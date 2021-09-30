@@ -56,7 +56,7 @@ public class MazeSolverDFS
         ArrayList<Integer> dfsPath = mazeMatrix.solveDFS();
 
         System.out.println("PATH: " + dfsPath);
-        System.out.println("PATH STEPS:" + mazeMatrix.getPathSize());
+        System.out.println("PATH STEPS: " + mazeMatrix.getPathSize());
         System.out.println("OPTIMAL PATH: "+ mazeMatrix.findPath());
 
         double endTime = new Date().getTime();
