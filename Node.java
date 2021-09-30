@@ -30,7 +30,7 @@ public class Node {
     this.left = null;
     this.up = null;
     this.down = null;
-    this.cellOpenness = -1;
+    this.cellOpenness = 0;
     this.row = tRow;
     this.col = tCol;
     this.name = index;
@@ -197,13 +197,44 @@ public class Node {
     return cellOpenness;
   }
 
+  public void rightPossible()
+  {
+    if(cellOpenness == 0)
+    {
+      cellOpenness = 1;
+    }
+    else if (cellOpenness == 2)
+    {
+      cellOpenness = 3;
+    }
+  }
+
+  public void downPossible()
+  {
+    if(cellOpenness == 0)
+    {
+      cellOpenness = 2;
+    }
+    else if (cellOpenness == 1)
+    {
+      cellOpenness = 3;
+    }
+  }
+
   public ArrayList<Node> getAllUnivistedNodes(){
 
     ArrayList<Node> unvisited = new ArrayList<>();
-    
-    
+    //Check up
+
+    if(up != null){
+      //Check if node hasn't been visted
+      if(!up.getVisited()){
+        unvisited.add(up);
+      }
+    }
 
     //Check down 
+
     if(down != null){
       //Check if node hasn't been visted
       if(!down.getVisited()){
@@ -211,15 +242,8 @@ public class Node {
       }
     }
 
-    //Check right
-    if(right != null){
-      //Check if node hasn't been visted
-      if(!right.getVisited()){
-        unvisited.add(right);
-      }
-    }
-
     //Check left
+
     if(left != null){
       //Check if node hasn't been visted
       if(!left.getVisited()){
@@ -227,11 +251,12 @@ public class Node {
       }
     }
 
-    //Check up
-    if(up != null){
+    //Check right
+
+    if(right != null){
       //Check if node hasn't been visted
-      if(!up.getVisited()){
-        unvisited.add(up);
+      if(!right.getVisited()){
+        unvisited.add(right);
       }
     }
 
