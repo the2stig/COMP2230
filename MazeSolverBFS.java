@@ -3,8 +3,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import java.util.Date;
-
 public class MazeSolverBFS {
     
     public static void main(String[] args) {
@@ -45,21 +43,22 @@ public class MazeSolverBFS {
         //Create a new matrix and load node into it
         MazeMatrix mazeMatrix = new MazeMatrix(mazeWidth,mazeHeight,cellOpennessList,startPostion,endPostion);
 
-        double startTime = new Date().getTime();
+        
 
         //Solve with BFS
         System.out.println("BREADTH FIRST SEARCH");
 
+        double startTime = System.nanoTime();
+
         ArrayList<Integer> bfsPath = mazeMatrix.solveBFS();
+
+        double endTime = System.nanoTime();
 
         System.out.println("PATH: " + bfsPath);
         System.out.println("PATH STEPS: " + mazeMatrix.getPathSize());
         System.out.println("OPTIMAL PATH: "+ mazeMatrix.findPath());
 
-
-        double endTime = new Date().getTime();
-
-        double timeTaken = endTime - startTime;
+        double timeTaken = (endTime - startTime) / 1000000;
 
         System.out.println("TIME TAKEN: " + timeTaken + " ms");
         
