@@ -1,29 +1,39 @@
 import java.util.*;
 
+// Written by   : Kyle Beattie c3303374 and Joshua Flynn c3304206
+// Course       : COMP2230
+// Modified     : 08/10/2021
+// 
+// Program Description:
+// Node class stores necessary data each cell in a maze matrix
+// Other methods to assists in solving or generating maze
+
 public class Node {
  
-  private Node right;
-  private Node left;
-  private Node up;
-  private Node down;  
+  private Node right; // Right of current node
+  private Node left; // left of current node
+  private Node up; // Up of current node
+  private Node down; // Down of current node
 
-  private Node parent;
-  private int cellOpenness;
-  private int row;
-  private int col;
-  private int name;
+  private Node parent; // Parent of current node
+  private int cellOpenness; // Openiness must be on these value 0,1,2,3
+  private int row; // Node row postion
+  private int col; // Node column postion
+  private int name; // Name of node can be reffered as id
 
-  private boolean startNode;
-  private boolean endNode;
-  private boolean visited;
+  private boolean startNode; // is start node?
+  private boolean endNode; // is end node?
+  private boolean visited; // been visted?
 
-  private Stack<Integer> possibleDirections;
 
+  private Stack<Integer> possibleDirections; // List of node possible direction up(1),down(3),left(4), right(2)
+
+  // Setup node with name
   public Node(int id){
     this.name = id;
   }
 
-
+  // Constructor
   public Node(int tRow, int tCol, int index, Stack<Integer> tPossibleDirections) 
   {
     this.right = null;
@@ -39,6 +49,7 @@ public class Node {
     this.possibleDirections = tPossibleDirections;
   }
 
+  // Constructor
   public Node(int tRow, int tCol, int index) 
   {
     this.right = null;
@@ -57,24 +68,15 @@ public class Node {
 
  
 
+  // Setters
   public void setRightNode(Node node) 
   {
     this.right = node;
   }
 
-  public Node getRightNode() 
-  {
-    return this.right;
-  }
-
   public void setLeftNode(Node node) 
   {
     this.left = node;
-  }
- 
-  public Node getLeftNode() 
-  {
-    return this.left;
   }
 
   public void setUpNode(Node node) 
@@ -82,49 +84,19 @@ public class Node {
     this.up = node;
   }
 
-  public Node getUpNode() 
-  {
-    return this.up;
-  }
-
   public void setDownNode(Node node) 
   {
     this.down = node;
   }
 
-  public Node getDownNode() 
-  {
-    return this.down;
-  }
- 
   public void setCellOpenness(int tCellOpenness) 
   {
     this.cellOpenness = tCellOpenness;
   }
 
-  public int getCellOpenness() 
-  {
-    return this.cellOpenness;
-  }
-
-    public void setRow(int tRow) 
-  {
-    this.row = tRow;
-  }
-
-  public int getRow() 
-  {
-    return this.row;
-  }
-
-    public void setCol(int tCol) 
+  public void setCol(int tCol) 
   {
     this.col = tCol;
-  }
-
-  public int getCol() 
-  {
-    return this.col;
   }
 
   public void setName(int index) 
@@ -132,19 +104,9 @@ public class Node {
     this.name = index;
   }
 
-  public int getName() 
-  {
-    return this.name;
-  }
-
   public void setStartNode()
   {
     this.startNode = true;
-  }
-
-  public boolean isStartNode()
-  {
-    return this.startNode;
   }
 
   public void setEndNode()
@@ -152,14 +114,69 @@ public class Node {
     this.endNode = true;
   }
 
-  public boolean isEndNode()
-  {
-    return this.endNode;
-  }
-
   public void setVisited()
   {
     this.visited = true;
+  }
+
+  public void unsetVisit() {
+    visited = false;
+  }
+
+  public void setParent(Node node) {
+    parent = node;
+  }
+
+  public void setRow(int tRow) 
+  {
+    this.row = tRow;
+  }
+
+  // Getters
+  public Node getRightNode() 
+  {
+    return this.right;
+  }
+
+  public Node getLeftNode() 
+  {
+    return this.left;
+  }
+
+  public Node getUpNode() 
+  {
+    return this.up;
+  }
+
+  public Node getDownNode() 
+  {
+    return this.down;
+  }
+
+  public int getCellOpenness() 
+  {
+    return this.cellOpenness;
+  }
+
+  public int getRow() 
+  {
+    return this.row;
+  }
+
+
+
+  public int getCol() 
+  {
+    return this.col;
+  }
+
+  public int getName() 
+  {
+    return this.name;
+  }
+
+  public Node getParent() {
+    return parent;
   }
 
   public boolean getVisited()
@@ -167,16 +184,30 @@ public class Node {
     return this.visited;
   }
 
+  // Return next directon of direction stack
   public Integer getDirection()
   {
     return this.possibleDirections.pop();
   }
 
+  // If possible directions is empty
   public boolean isEmpty()
   {
     return this.possibleDirections.empty();
   }
 
+  // Is start node?
+  public boolean isStartNode() {
+    return this.startNode;
+  }
+
+  // Is end node?
+  public boolean isEndNode() {
+    return this.endNode;
+  }
+
+  // Returns cell avaliable cells in form of 0,1,2,3 as stated in the assignment
+  // maze generator file format
   public int calculateCellOpenness()
   {
     int cellOpenness = 0;
@@ -197,6 +228,7 @@ public class Node {
     return cellOpenness;
   }
 
+  // Updates cell openiness to be able to go right
   public void rightPossible()
   {
     if(cellOpenness == 0)
@@ -209,6 +241,7 @@ public class Node {
     }
   }
 
+  // Updates cell openiness to be able to go down
   public void downPossible()
   {
     if(cellOpenness == 0)
@@ -221,6 +254,7 @@ public class Node {
     }
   }
 
+  // Return surrondings nodes that haven't been visted yet
   public ArrayList<Node> getAllUnivistedNodes(){
 
     ArrayList<Node> unvisited = new ArrayList<>();
@@ -261,15 +295,4 @@ public class Node {
     return unvisited;
   }
 
-  public void setParent(Node node){
-    parent = node;
-  }
-
-  public Node getParent(){
-    return parent;
-  }
-
-  public void unsetVisit(){
-    visited = false;
-  }
 }
