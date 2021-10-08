@@ -3,6 +3,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+// Written by   : Kyle Beattie c3303374 and Joshua Flynn c3304206
+// Course       : COMP2230
+// Modified     : 08/10/2021
+// 
+// Program Description:
+// Load file and parse maze. Solves maze using depth first search and display results.
+
 public class MazeSolverDFS 
 {
     public static void main(String[] args) 
@@ -13,6 +20,7 @@ public class MazeSolverDFS
         //Load input file file
         String contents = "";
 
+        //get contents
         try{
             contents = new String(Files.readAllBytes(Paths.get(inputFile)));
         }catch(IOException e){
@@ -45,15 +53,18 @@ public class MazeSolverDFS
 
     
 
-        //Solve with DFS
         System.out.println("DEPTH FIRST SEARCH");
 
+        //Start clock
         double startTime = System.nanoTime();
 
+        //Solve with DFS
         ArrayList<Integer> dfsPath = mazeMatrix.solveDFS();
 
         double endTime = System.nanoTime();
+        //End clock
 
+        //Print results
         System.out.println("PATH: " + dfsPath);
         System.out.println("PATH STEPS: " + mazeMatrix.getPathSize());
         System.out.println("OPTIMAL PATH: "+ mazeMatrix.findPath());
