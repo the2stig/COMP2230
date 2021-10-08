@@ -163,8 +163,6 @@ public class Node {
     return this.row;
   }
 
-
-
   public int getCol() 
   {
     return this.col;
